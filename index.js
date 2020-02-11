@@ -21,4 +21,12 @@ const io = socket(server)
 io.on('connection', connectedSocket => {
   console.log('TCL: connectedSocket', connectedSocket.id)
   console.log('Socket connected!')
+
+  connectedSocket.on('chat-message', data => {
+    io.sockets.emit('chat-message', data)
+  })
+
+  connectedSocket.on('chat-typing', data => {
+    connectedSocket.broadcast.emit('chat-typing', data)
+  })
 })
